@@ -1,0 +1,30 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+<main class="dashboard">
+  <h2>Welcome, {{ session.username }} 👋</h2>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <h3>Students</h3>
+      <p>Manage student information, add new students, and update details.</p>
+      <a href="{{ url_for('students_view') }}" class="btn">Go to Students</a>
+
+    </div>
+
+    <div class="card">
+      <h3>Courses</h3>
+      <p>View, add, and edit courses offered by your institution.</p>
+      <a href="{{ url_for('courses_view') }}" class="btn">Go to Courses</a>
+
+    </div>
+
+    <div class="card">
+      <h3>Marks</h3>
+      <p>Record and update marks for students easily in one place.</p>
+      <a href="{{ url_for('marks_view') }}" class="btn">Go to Marks</a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}
