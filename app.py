@@ -11,10 +11,26 @@ import sys
 from flask import Response
 import csv
 from io import StringIO
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
+
+# Read values from environment
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_NAME = os.getenv("DB_NAME")
+DB_HOST = os.getenv("DB_HOST")
+
+# Build connection string dynamically
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:3306/{DB_NAME}"
+)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -201,5 +217,6 @@ if __name__ == '__main__':
     # Only run the server if not called with --init-db only
     if '--init-db' not in sys.argv or len(sys.argv) == 1:
         app.run(host="0.0.0.0", port=5000, debug=True)
+
 
 
