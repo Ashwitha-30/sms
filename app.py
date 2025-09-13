@@ -200,6 +200,6 @@ if __name__ == '__main__':
                 print('Created default admin: admin / admin123')
     # Only run the server if not called with --init-db only
     if '--init-db' not in sys.argv or len(sys.argv) == 1:
-        app.run(debug=True, port=8080)
+        app.run(host="0.0.0.0", port=5000, debug=True)
 
 
