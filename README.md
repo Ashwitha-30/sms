@@ -1,1 +1,1 @@
-# sms-python-
+# Student Management System (SMS)
