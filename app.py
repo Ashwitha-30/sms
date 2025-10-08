@@ -4,15 +4,16 @@
 # 2) python app.py --init-db   # creates DB and optional seed admin
 # 3) python app.py             # run server at http://127.0.0.1:8080
 
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 import sys
-from flask import Response
+import os
 import csv
 from io import StringIO
-import os
+
+from flask import Flask, render_template, request, redirect, url_for, session, flash, Response
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -217,6 +218,7 @@ if __name__ == '__main__':
     # Only run the server if not called with --init-db only
     if '--init-db' not in sys.argv or len(sys.argv) == 1:
         app.run(host="0.0.0.0", port=5000, debug=True)
+
 
 
 
