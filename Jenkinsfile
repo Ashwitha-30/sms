@@ -31,11 +31,14 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh """
-                docker stop ${IMAGE_NAME} || true
-                docker rm ${IMAGE_NAME} || true
-                docker run --env-file /home/ubuntu/sms/.env -d --name ${IMAGE_NAME} -p 5000:5000 ${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                // Use secret .env file from Jenkins credentials
+                withCredentials([file(credentialsId: 'sms-env-file', variable: 'ENV_FILE')]) {
+                    sh """
+                    docker stop ${IMAGE_NAME} || true
+                    docker rm ${IMAGE_NAME} || true
+                    docker run --env-file $ENV_FILE -d --name ${IMAGE_NAME} -p 5000:5000 ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
             }
         }
     }
